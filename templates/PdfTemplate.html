@@ -1,0 +1,77 @@
+<html>
+	<head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<style>
+            #header {
+                width: 100%;
+                text-align: center;
+                vertical-align: middle;
+            }
+            .border-bottom {
+                padding-bottom: 20px;
+                border-bottom: 1px solid #AAAAAA;
+                margin-bottom: 20px;
+            }
+            .bold {
+                font-weight: bold;
+            }
+            h4 {
+                margin: 0;
+            }
+            #message-body {
+                font-size: 120%;
+            }
+		</style>
+	</head>
+	<body>
+        <div id="header" class="border-bottom">
+            <h1>West Chester Chinese Evangelical Church</h1>
+            <div>1601 Green Lane</div>
+            <div>West Chester, PA 19382</div>
+            <div>(610) 745-7991</div>
+            <div>www.WCCEC.org</div>
+        </div>
+        <div id="message-body" class="border-bottom">
+            Dear {{FullName}}, <br><br>
+            We greatly appreciate your generous contribution of ${{TotalDonation}} to the West Chester Chinese Evangelical Church (WCCEC) for the year of {{Year}}.  Thank you very much. <br><br>
+            May God richly bless you and your family!<br><br>
+            Sincerely yours,<br>
+            Fuyu Guan<br>
+            Treasurer<br>
+            West Chester Chinese Evangelical Church
+        </div>
+        <div id="donation-summary">
+            <h4>The following is a log of your donations to WCCEC for the year of {{Year}}:</h4>
+            <table border="1" style="width:100%">
+                <tr>
+                    <td><span class="bold">Name: </span></td>
+                    <td>{{FullName}}</td>
+                </tr>
+                <tr>
+                    <td><span class="bold">Mailing List ID: </span></td>
+                    <td>{{ID}}</td>
+                </tr>
+                <tr>
+                    <td><span class="bold">Address: </span></td>
+                    <td>{{FullAddress}}</td>
+                </tr>
+                <tr>
+                    <td><span class="bold">Date: </span></td>
+                    <td><span class="bold">Check Number: </span></td>
+                    <td><span class="bold">Ministry Designation: </span></td>
+                    <td><span class="bold">Designated Amount: </span></td>
+                    <td><span class="bold">Total Amount: </span></td>
+                </tr>
+                {{DonationsString}}
+                <tr>
+                    <td style="visibility: hidden"></td>
+                    <td style="visibility: hidden"></td>
+                    <td style="visibility: hidden"></td>
+                    <td><span class="bold">Total Donation: </span></td>
+                    <td>${{TotalDonation}}</td>
+                </tr>
+            </table>
+
+        </div>
+	</body>
+</html>
