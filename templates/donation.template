@@ -1,0 +1,7 @@
+﻿<tr>
+	<td>{{date}}</td>
+	<td>{{checkNumber}}</td>
+	<td>{{fundName}}</td>
+	<td>${{fundAmount}}</td>
+	<td>${{amount}}</td>
+</tr>

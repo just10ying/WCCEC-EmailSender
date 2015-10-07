@@ -1,81 +1,106 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Collections;
+using System.Text;
 
 namespace EmailSender
 {
     class Person
     {
+        private const char DELIMITER = '/';
+        private const string PERSON_NAME_DELIMITER = " and ";
+        private const string DEFAULT_COUNTRY = "USA";
 
-        public int ID;
-        public string firstName;
-        public string lastName;
-        public string address;
-        public string city;
-        public string state;
-        public string zip;
-        public string country;
-        public string email;
-        public ArrayList donations;
+        private int ID;
+        private string firstName;
+        private string lastName;
+        private string address;
+        private string city;
+        private string state;
+        private string zip;
+        private string country;
+        private string email;
+        private ArrayList donations;
 
         public Person(DataRow personData)
         {
-            this.ID = Convert.ToInt32(personData["MailingListID"]);
-            this.firstName = personData["FirstName"].ToString();
-            this.lastName = personData["LastName"].ToString();
-            this.address = personData["Address"].ToString();
-            this.city = personData["City"].ToString();
-            this.state = personData["State"].ToString();
-            this.zip = personData["PostalCode"].ToString();
-            this.country = personData["Country/Region"].ToString();
-            this.email = personData["EmailAddress"].ToString();
-            this.donations = new ArrayList();
+            ID = Convert.ToInt32(personData["MailingListID"]);
+            firstName = personData["FirstName"].ToString();
+            lastName = personData["LastName"].ToString();
+            address = personData["Address"].ToString();
+            city = personData["City"].ToString();
+            state = personData["State"].ToString();
+            zip = personData["PostalCode"].ToString();
+            country = personData["Country/Region"].ToString();
+            email = personData["EmailAddress"].ToString();
+            donations = new ArrayList();
         }
 
+        public int GetID()
+        {
+            return ID;
+        }
+
+        public ArrayList GetDonations()
+        {
+            return donations;
+        }
+
+        // The church's data is extremely messy, and names are stored horribly.  This function cleans up the values we read from the database.
         public string GetFullName()
         {
-            string[] firstNames = firstName.Split(new Char[] {'/'});
-            string[] lastNames = lastName.Split(new Char[] {'/'});
-            // If singular person with one first name and one last name
+            // Sometimes, names are delimited using slashes.  Split these up:
+            string[] firstNames = firstName.Split(new Char[] { DELIMITER });
+            string[] lastNames = lastName.Split(new Char[] { DELIMITER });
+
+            StringBuilder returnStringBuilder = new StringBuilder();
+
+            // Singular person with one first name and one last name:
             if ((firstNames.Length == 1) && (lastNames.Length == 1))
             {
-                return firstNames[0] + " " + lastNames[0];
+                returnStringBuilder.Append(firstNames[0]).Append(" ").Append(lastNames[0]);
             }
-            // If two people with different first names but the same last name
-            if ((firstNames.Length == 2) && (lastNames.Length == 1))
+            // Two people with different first names but the same last name:
+            else if ((firstNames.Length == 2) && (lastNames.Length == 1))
             {
-                return firstNames[0] + " and " + firstNames[1] + " " + lastNames[0];
+                returnStringBuilder.Append(firstNames[0]).Append(PERSON_NAME_DELIMITER).Append(firstNames[1]).Append(" ").Append(lastNames[0]);
             }
-            // If two people with the same first name and different last names
-            if ((firstNames.Length == 1) && (lastNames.Length == 2))
+            // Two people with the same first name and different last names:
+            else if ((firstNames.Length == 1) && (lastNames.Length == 2))
             {
-                return firstNames[0] + " " + lastNames[0] + " and " + firstNames[0] + " " + lastNames[1];
+                returnStringBuilder.Append(firstNames[0]).Append(" ").Append(lastNames[0]).Append(PERSON_NAME_DELIMITER).Append(firstNames[0]).Append(" ").Append(lastNames[1]);
+
             }
-            // If two people with different first and last names
-            return firstNames[0] + " " + lastNames[0] + " and " + firstNames[1] + " " + lastNames[1];
+            // Two people with different first and last names:
+            else
+            {
+                returnStringBuilder.Append(firstNames[0]).Append(" ").Append(lastNames[0]).Append(PERSON_NAME_DELIMITER).Append(firstNames[1]).Append(" ").Append(lastNames[1]);
+            }
+            return returnStringBuilder.ToString();
         }
 
+        // This should use a template!  TODO (address.template)
         public string GetMailingAddress()
         {
-            string returnString = address + "\n<br>" + city + ", " + state + " " + zip;
-            if (String.Compare(this.country, "USA") != 0)
+            Hashtable addressValues = new Hashtable();
+            addressValues.Add("address", address);
+
+            StringBuilder returnStringBuilder = new StringBuilder(address).Append("\n<br>").Append(city).Append(", ").Append(state).Append(" ").Append(zip);
+            if (String.Compare(this.country, DEFAULT_COUNTRY) != 0)
             {
-                returnString += "\n" + country;
+                returnStringBuilder.Append("\n<br>").Append(country);
             }
-            return returnString;
+            return returnStringBuilder.ToString();
         }
 
-        public string GetValidEmail()
+        // Parse out the first email and return that, if it exists.
+        public string GetEmail()
         {
             if (email.Length == 0)
             {
                 throw new Exception("Error: there is no email in the database for this user.");
             }
-            string [] emailList = email.Replace(" ", "").Split(new Char [] {'/'});
+            string [] emailList = email.Replace(" ", "").Split(new Char [] { DELIMITER });
             return emailList[0];
         }
     }

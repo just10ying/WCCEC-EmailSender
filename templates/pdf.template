@@ -1,6 +1,5 @@
 <html>
 	<head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<style>
             #header {
                 width: 100%;
@@ -33,12 +32,12 @@
         </div>
         <div id="message-body" class="border-bottom">
             Dear {{FullName}}, <br><br>
-            We greatly appreciate your generous contribution of ${{TotalDonation}} to the West Chester Chinese Evangelical Church (WCCEC) for the year of {{Year}}.  Thank you very much. <br><br>
+            We greatly appreciate your generous contribution of ${{TotalDonation}} to the West Chester Community Evangelical Church (WCCEC) for the year of {{Year}}.  Thank you very much. <br><br>
             May God richly bless you and your family!<br><br>
             Sincerely yours,<br>
             Fuyu Guan<br>
             Treasurer<br>
-            West Chester Chinese Evangelical Church
+            West Chester Community Evangelical Church
         </div>
         <div id="donation-summary">
             <h4>The following is a log of your donations to WCCEC for the year of {{Year}}:</h4>

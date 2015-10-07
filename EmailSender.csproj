@@ -71,6 +71,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DbUtilities.cs" />
+    <Compile Include="EmailData.cs" />
     <Compile Include="Donation.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -78,8 +80,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PDFData.cs" />
     <Compile Include="Person.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="FileUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,25 +106,33 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="templates\address.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libeay32.dll">
+    <Content Include="dll\libeay32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="libgcc_s_dw2-1.dll">
+    <Content Include="dll\libgcc_s_dw2-1.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="mingwm10.dll">
+    <Content Include="dll\mingwm10.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ssleay32.dll">
+    <Content Include="dll\ssleay32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="templates\PdfTemplate.html" />
-    <Content Include="wkhtmltox0.dll">
+    <None Include="templates\donation.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="templates\pdf.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="dll\wkhtmltox0.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

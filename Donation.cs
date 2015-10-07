@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmailSender
 {
     class Donation
     {
-        public int ID;
-        public DateTime date;
-        public double amount;
-        public string checkNumber;
-        public string fundName;
-        public double fundAmount;
+        private const string TEMPLATE_PATH = "templates/donation.template";
+        private const string DATE_FORMAT = "MMMM dd, yyyy";
+
+        private int ID;
+        private DateTime date;
+        private double amount;
+        private string checkNumber;
+        private string fundName;
+        private double fundAmount;
 
         public Donation(DataRow donationData)
         {
@@ -24,6 +24,27 @@ namespace EmailSender
             this.checkNumber = donationData["Check number"].ToString();
             this.fundName = donationData["fund"].ToString();
             this.fundAmount = Convert.ToDouble(donationData["designate amount for the fund"]);
+        }
+
+        public int GetID()
+        {
+            return ID;
+        }
+
+        public double GetAmount()
+        {
+            return amount;
+        }
+
+        public string ToTemplateString()
+        {
+            Hashtable values = new Hashtable();
+            values.Add("date", date.ToString(DATE_FORMAT));
+            values.Add("checkNumber", checkNumber);
+            values.Add("fundName", fundName);
+            values.Add("fundAmount", fundAmount);
+            values.Add("amount", amount);
+            return FileUtilities.PopulateTemplate(TEMPLATE_PATH, values);
         }
 
     }
